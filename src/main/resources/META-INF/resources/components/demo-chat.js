@@ -1,4 +1,4 @@
-import {css, LitElement} from 'lit';
+import {LitElement} from 'lit';
 import '@vaadin/icon';
 import '@vaadin/button';
 import '@vaadin/text-field';
@@ -12,7 +12,7 @@ import '@vaadin/grid/vaadin-grid-sort-column.js';
 
 export class DemoChat extends LitElement {
 
-    _stripHtml(html)   {
+    _stripHtml(html) {
         const div = document.createElement("div");
         div.innerHTML = html;
         return div.textContent || div.innerText || "";
@@ -23,8 +23,24 @@ export class DemoChat extends LitElement {
 
         const protocol = (window.location.protocol === 'https:') ? 'wss' : 'ws';
         const socket = new WebSocket(protocol + '://' + window.location.host + '/facts');
+        const scoresocket = new WebSocket(protocol + '://' + window.location.host + '/scores');
 
         const that = this;
+
+        scoresocket.onmessage = function (event) {
+            chatBot.sendMessage(event.data, {
+                right: false,
+                sender: {
+                    name: "Judge",
+                    id: "00000000-0000-0000-0000-000000000002",
+                    avatar: "https://ui-avatars.com/api/?name=GR&background=ED627F"
+                }
+
+            });
+
+        }
+
+
         socket.onmessage = function (event) {
             chatBot.hideLastLoading();
             // LLM response
@@ -32,8 +48,8 @@ export class DemoChat extends LitElement {
             if (chatBot.messages.length > 0) {
                 lastMessage = chatBot.messages[chatBot.messages.length - 1];
             }
-            if (lastMessage && lastMessage.sender.name === "Bot"  && ! lastMessage.loading) {
-                if (! lastMessage.msg) {
+            if (lastMessage && lastMessage.sender.name === "Bot" && !lastMessage.loading) {
+                if (!lastMessage.msg) {
                     lastMessage.msg = "";
                 }
                 lastMessage.msg += event.data;
@@ -44,7 +60,7 @@ export class DemoChat extends LitElement {
                 } else {
                     bubble.innerHTML = lastMessage.msg;
                 }
-                chatBot.body.scrollTo({ top: chatBot.body.scrollHeight, behavior: 'smooth' })
+                chatBot.body.scrollTo({top: chatBot.body.scrollHeight, behavior: 'smooth'})
             } else {
                 chatBot.sendMessage(event.data, {
                     right: false,
@@ -56,7 +72,7 @@ export class DemoChat extends LitElement {
         }
 
         chatBot.addEventListener("sent", function (e) {
-            if (e.detail.message.sender.name !== "Bot") {
+            if (e.detail.message.sender.name !== "Bot" && e.detail.message.sender.name !== "Judge") {
                 // User message
                 const msg = that._stripHtml(e.detail.message.message);
                 socket.send(msg);

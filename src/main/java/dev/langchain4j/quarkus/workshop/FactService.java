@@ -14,7 +14,7 @@ public interface FactService {
             You are a helpful knowledge base.
             You are friendly, polite and concise.
             
-            Be concise, but do include the question in your response.
+            Be concise, with an answer of no more than 50 words.
             
             Today is {current_date}.
             """)
