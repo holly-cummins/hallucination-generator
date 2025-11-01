@@ -1,7 +1,7 @@
 package dev.langchain4j.quarkus.workshop;
 
-import dev.langchain4j.data.message.AiMessage;
 import io.quarkiverse.langchain4j.guardrails.OutputGuardrail;
+import io.quarkiverse.langchain4j.guardrails.OutputGuardrailParams;
 import io.quarkiverse.langchain4j.guardrails.OutputGuardrailResult;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -15,12 +15,14 @@ public class HallucinationGuard implements OutputGuardrail {
     }
 
     @Override
-    public OutputGuardrailResult validate(AiMessage responseFromLLM) {
-        if (responseFromLLM.text().length() < 1) {
+    public OutputGuardrailResult validate(OutputGuardrailParams params) {
+        var responseFromLLM = params.responseFromLLM();
+        var question = params.memory().messages().getLast();
+        if (responseFromLLM.text().isEmpty()) {
             System.out.println("Empty string, retrying");
             return retry("No response");
         }
-        double result = service.getLikelihood(responseFromLLM.text());
+        double result = service.getLikelihood(question.toString(), responseFromLLM.text());
         System.out.println("Hallucination Guard: " + result);
         if (result > 0.5) {
             return retry("Truth detected. Most recent response: " + responseFromLLM.text());

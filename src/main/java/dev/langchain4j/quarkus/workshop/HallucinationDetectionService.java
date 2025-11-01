@@ -29,7 +29,8 @@ public interface HallucinationDetectionService {
              Statement: Strawberries are a vegetable
              0.1
             
+             User Question: {question}
              Statement: {responseFromLLM}
             """)
-    double getLikelihood(String responseFromLLM);
+    double getLikelihood(String question, String responseFromLLM);
 }

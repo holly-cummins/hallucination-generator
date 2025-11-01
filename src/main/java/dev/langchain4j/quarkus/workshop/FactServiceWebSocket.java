@@ -10,9 +10,11 @@ import io.quarkus.websockets.next.WebSocket;
 public class FactServiceWebSocket {
 
     private final FactService FactService;
+    private final StoryGenerator generator;
 
-    public FactServiceWebSocket(FactService FactService) {
+    public FactServiceWebSocket(FactService FactService, StoryGenerator generator) {
         this.FactService = FactService;
+        this.generator = generator;
     }
 
     @OnOpen
@@ -22,8 +24,10 @@ public class FactServiceWebSocket {
 
     @OnTextMessage
     public String onTextMessage(String message) {
+        var context = generator.generate("2 rabbits eating carrots during a space travel.");
+//        var context = "";
         try {
-            return FactService.chat(message);
+            return FactService.chat(message, context);
         } catch (GuardrailException e) {
             Log.errorf(e, "Error calling the LLM: %s", e.getMessage());
             return "Could not find an acceptable answer. " + e.getMessage();
