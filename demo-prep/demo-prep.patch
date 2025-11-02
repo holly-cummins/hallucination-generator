@@ -1,0 +1,39 @@
+Subject: [PATCH] Aim for truth, not hallucinations
+---
+Index: src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java b/src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java
+--- a/src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java	(revision f1e09e7628eea1cb899c1026e3f3db18dd5fbcf7)
++++ b/src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java	(date 1762020712855)
+@@ -30,8 +30,8 @@
+         scoreWebSocket.recordScore(result);
+ 
+         System.out.println("Hallucination Guard: " + result);
+-        if (result > 0.5) {
+-            return retry("Truth detected. Most recent response: " + responseFromLLM.text());
++        if (result < 0.5) {
++            return retry("Hallucination detected. Most recent response: " + responseFromLLM.text());
+         }
+         return success();
+     }
+Index: src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java b/src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java
+--- a/src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java	(revision f1e09e7628eea1cb899c1026e3f3db18dd5fbcf7)
++++ b/src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java	(date 1762020732049)
+@@ -24,8 +24,7 @@
+ 
+     @OnTextMessage
+     public String onTextMessage(String message) {
+-        var context = generator.generate("2 rabbits eating carrots during a space travel.");
+-//        var context = "";
++        var context = "";
+         try {
+             return FactService.chat(message, context);
+         } catch (GuardrailException e) {

@@ -12,6 +12,7 @@
     - How many r's in strawberry
     - Math
     - What is the efficiency of kangaroo on a trampoline
+    - Why is the English Channel called the English Channel?
     - What is the world record for crossing the English Channel on foot
 4. You should get ridiculous and implausible answers
 
@@ -22,3 +23,11 @@ Instead, by reversing the check, they can be used to guarantee hallucinations (s
 
 How well this works depends a lot on the models used. Local models are more prone to hallucinate.  
 Useful list of models: https://ollama.com/library
+
+## A demo flow
+
+For a demo,
+
+1. Run `./demo-prep/demo-prep` to make the guardrails operate conventionally
+2. Show that questions mostly generate truth, or that when they don't, the guardrail blocks the incorrect answer.
+3. Reverse the polarity 
