@@ -30,4 +30,7 @@ For a demo,
 
 1. Run `./demo-prep/demo-prep` to make the guardrails operate conventionally
 2. Show that questions mostly generate truth, or that when they don't, the guardrail blocks the incorrect answer.
-3. Reverse the polarity 
+3. Reverse the polarity of the guardrail, and change "hallucination" back to "truth"
+4. To make hallucinations even more likely, add some context in the `FactServiceWebSocket`, using the generator. For
+   example,
+   `var context = generator.generate("2 rabbits eating carrots during a space travel.")`
