@@ -1,4 +1,4 @@
-Subject: [PATCH] Aim for truth, not hallucinations
+Subject: [PATCH] More complete demo instructions
 ---
 Index: src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java
 IDEA additional info:
@@ -6,8 +6,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
 diff --git a/src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java b/src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java
---- a/src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java	(revision f1e09e7628eea1cb899c1026e3f3db18dd5fbcf7)
-+++ b/src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java	(date 1762020712855)
+--- a/src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java	(revision 82a9ece2c74b42d29c1682809de7740a70c03694)
++++ b/src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java	(date 1762166912998)
 @@ -30,8 +30,8 @@
          scoreWebSocket.recordScore(result);
  
@@ -25,8 +25,8 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
 diff --git a/src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java b/src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java
---- a/src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java	(revision f1e09e7628eea1cb899c1026e3f3db18dd5fbcf7)
-+++ b/src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java	(date 1762020732049)
+--- a/src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java	(revision 82a9ece2c74b42d29c1682809de7740a70c03694)
++++ b/src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java	(date 1762166912999)
 @@ -24,8 +24,7 @@
  
      @OnTextMessage
@@ -37,3 +37,26 @@ diff --git a/src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket
          try {
              return FactService.chat(message, context);
          } catch (GuardrailException e) {
+Index: src/main/java/dev/langchain4j/quarkus/workshop/FactService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/dev/langchain4j/quarkus/workshop/FactService.java b/src/main/java/dev/langchain4j/quarkus/workshop/FactService.java
+--- a/src/main/java/dev/langchain4j/quarkus/workshop/FactService.java	(revision 82a9ece2c74b42d29c1682809de7740a70c03694)
++++ b/src/main/java/dev/langchain4j/quarkus/workshop/FactService.java	(date 1762167002390)
+@@ -3,7 +3,6 @@
+ import dev.langchain4j.service.SystemMessage;
+ import dev.langchain4j.service.UserMessage;
+ import io.quarkiverse.langchain4j.RegisterAiService;
+-import io.quarkiverse.langchain4j.guardrails.OutputGuardrails;
+ import jakarta.enterprise.context.SessionScoped;
+ 
+ @SessionScoped
+@@ -23,6 +22,5 @@
+             Some context:
+             {context}
+             """)
+-    @OutputGuardrails(HallucinationGuard.class)
+     String chat(String question, String context);
+ }
