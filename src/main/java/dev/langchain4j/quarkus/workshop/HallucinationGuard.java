@@ -1,8 +1,10 @@
 package dev.langchain4j.quarkus.workshop;
 
-import io.quarkiverse.langchain4j.guardrails.OutputGuardrail;
-import io.quarkiverse.langchain4j.guardrails.OutputGuardrailParams;
-import io.quarkiverse.langchain4j.guardrails.OutputGuardrailResult;
+import dev.langchain4j.data.message.ChatMessageType;
+import dev.langchain4j.data.message.UserMessage;
+import dev.langchain4j.guardrail.OutputGuardrail;
+import dev.langchain4j.guardrail.OutputGuardrailRequest;
+import dev.langchain4j.guardrail.OutputGuardrailResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -19,14 +21,17 @@ public class HallucinationGuard implements OutputGuardrail {
     }
 
     @Override
-    public OutputGuardrailResult validate(OutputGuardrailParams params) {
-        var responseFromLLM = params.responseFromLLM();
-        var question = params.memory().messages().getLast();
+    public OutputGuardrailResult validate(OutputGuardrailRequest params) {
+        var responseFromLLM = params.responseFromLLM().aiMessage();
         if (responseFromLLM.text().isEmpty()) {
             System.out.println("Empty string, retrying");
             return retry("No response");
         }
-        double result = service.getLikelihood(question.toString(), responseFromLLM.text());
+        // Find the most recent user message to extract the question
+        var prompt = params.requestParams().chatMemory().messages().reversed().stream().filter(cm -> cm.type().equals(ChatMessageType.USER)).findFirst();
+        // Strip out the context from the question
+        var question = prompt.isPresent() ? ((UserMessage) prompt.get()).singleText().split("Some context")[0] : "";
+        double result = service.getLikelihood(question, responseFromLLM.text());
         scoreWebSocket.recordScore(result);
 
         System.out.println("Hallucination Guard: " + result);
