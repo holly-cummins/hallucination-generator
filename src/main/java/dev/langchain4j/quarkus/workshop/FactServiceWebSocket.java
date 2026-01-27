@@ -1,6 +1,6 @@
 package dev.langchain4j.quarkus.workshop;
 
-import io.quarkiverse.langchain4j.runtime.aiservice.GuardrailException;
+import dev.langchain4j.guardrail.GuardrailException;
 import io.quarkus.logging.Log;
 import io.quarkus.websockets.next.OnOpen;
 import io.quarkus.websockets.next.OnTextMessage;
@@ -24,7 +24,7 @@ public class FactServiceWebSocket {
 
     @OnTextMessage
     public String onTextMessage(String message) {
-        var context = generator.generate("2 rabbits eating carrots during a space travel.");
+        var context = generator.generate("2 hedgehogs eating carrots during space travel.");
 //        var context = "";
         try {
             return FactService.chat(message, context);
