@@ -19,8 +19,26 @@ public class ScoreWebSocket {
     }
 
     public void recordScore(double score) {
-        if (emitter != null) {
-            emitter.emit(Math.round(score * 100) + "%");
+        if (emitter!=null) {
+            emitter.emit(Math.round(score * 100) + "% truthy");
+        }
+    }
+
+    public void recordEmpty() {
+        if (emitter!=null) {
+            emitter.emit("[ ]");
+        }
+    }
+
+    public void recordStartOfCheck() {
+        if (emitter!=null) {
+            emitter.emit("...");
+        }
+    }
+
+    public void recordReject(String text) {
+        if (emitter!=null) {
+            emitter.emit("Rejecting answer: " + text);
         }
     }
 }

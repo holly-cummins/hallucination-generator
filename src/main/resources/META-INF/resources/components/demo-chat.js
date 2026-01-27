@@ -28,12 +28,17 @@ export class DemoChat extends LitElement {
         const that = this;
 
         scoresocket.onmessage = function (event) {
+            const loading = event.data == "..."
+            if (loading) {
+                event.data = ""
+            }
             chatBot.sendMessage(event.data, {
                 right: false,
                 sender: {
                     name: "Judge",
                     id: "00000000-0000-0000-0000-000000000002",
-                    avatar: "https://ui-avatars.com/api/?name=GR&background=ED627F"
+                    avatar: "/icons/judge.png",
+                    loading
                 }
 
             });
@@ -65,7 +70,9 @@ export class DemoChat extends LitElement {
                 chatBot.sendMessage(event.data, {
                     right: false,
                     sender: {
-                        name: "Bot"
+                        name: "Bot",
+                        avatar: "/icons/bot.png"
+
                     }
                 });
             }

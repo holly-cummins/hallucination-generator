@@ -22,20 +22,24 @@ public class HallucinationGuard implements OutputGuardrail {
 
     @Override
     public OutputGuardrailResult validate(OutputGuardrailRequest params) {
+        scoreWebSocket.recordStartOfCheck();
         var responseFromLLM = params.responseFromLLM().aiMessage();
-        if (responseFromLLM.text().isEmpty()) {
-            System.out.println("Empty string, retrying");
+        if (responseFromLLM.text()==null || responseFromLLM.text().isEmpty()) {
+            System.out.println("Empty string, retrying\n" + responseFromLLM);
+            scoreWebSocket.recordEmpty();
             return retry("No response");
         }
         // Find the most recent user message to extract the question
         var prompt = params.requestParams().chatMemory().messages().reversed().stream().filter(cm -> cm.type().equals(ChatMessageType.USER)).findFirst();
         // Strip out the context from the question
-        var question = prompt.isPresent() ? ((UserMessage) prompt.get()).singleText().split("Some context")[0] : "";
+        var question = prompt.isPresent() ? ((UserMessage) prompt.get()).singleText().split("Some context")[0]:"";
         double result = service.getLikelihood(question, responseFromLLM.text());
+
         scoreWebSocket.recordScore(result);
 
         System.out.println("Hallucination Guard: " + result);
         if (result > 0.5) {
+            scoreWebSocket.recordReject(responseFromLLM.text());
             return retry("Truth detected. Most recent response: " + responseFromLLM.text());
         }
         return success();
