@@ -1,4 +1,4 @@
-package dev.langchain4j.quarkus.workshop;
+package org.acme.knowsitall;
 
 import dev.langchain4j.data.message.ChatMessageType;
 import dev.langchain4j.data.message.UserMessage;

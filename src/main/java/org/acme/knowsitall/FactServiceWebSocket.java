@@ -1,4 +1,4 @@
-package dev.langchain4j.quarkus.workshop;
+package org.acme.knowsitall;
 
 import dev.langchain4j.guardrail.GuardrailException;
 import io.quarkus.logging.Log;

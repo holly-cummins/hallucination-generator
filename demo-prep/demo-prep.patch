@@ -5,14 +5,14 @@ index f5a64bf..e69de29 100644
 @@ -1,62 +0,0 @@
 -Subject: [PATCH] More complete demo instructions
 ----
--Index: src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java
+-Index: src/main/java/org/acme/knowsitall/HallucinationGuard.java
 -IDEA additional info:
 -Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 -<+>UTF-8
 -===================================================================
--diff --git a/src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java b/src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java
----- a/src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java	(revision 82a9ece2c74b42d29c1682809de7740a70c03694)
--+++ b/src/main/java/dev/langchain4j/quarkus/workshop/HallucinationGuard.java	(date 1762166912998)
+-diff --git a/src/main/java/org/acme/knowsitall/HallucinationGuard.java b/src/main/java/org/acme/knowsitall/HallucinationGuard.java
+---- a/src/main/java/org/acme/knowsitall/HallucinationGuard.java	(revision 82a9ece2c74b42d29c1682809de7740a70c03694)
+-+++ b/src/main/java/org/acme/knowsitall/HallucinationGuard.java	(date 1762166912998)
 -@@ -30,8 +30,8 @@
 -         scoreWebSocket.recordScore(result);
 - 
@@ -24,14 +24,14 @@ index f5a64bf..e69de29 100644
 -         }
 -         return success();
 -     }
--Index: src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java
+-Index: src/main/java/org/acme/knowsitall/FactServiceWebSocket.java
 -IDEA additional info:
 -Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 -<+>UTF-8
 -===================================================================
--diff --git a/src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java b/src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java
----- a/src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java	(revision 82a9ece2c74b42d29c1682809de7740a70c03694)
--+++ b/src/main/java/dev/langchain4j/quarkus/workshop/FactServiceWebSocket.java	(date 1762166912999)
+-diff --git a/src/main/java/org/acme/knowsitall/FactServiceWebSocket.java b/src/main/java/org/acme/knowsitall/FactServiceWebSocket.java
+---- a/src/main/java/org/acme/knowsitall/FactServiceWebSocket.java	(revision 82a9ece2c74b42d29c1682809de7740a70c03694)
+-+++ b/src/main/java/org/acme/knowsitall/FactServiceWebSocket.java	(date 1762166912999)
 -@@ -24,8 +24,7 @@
 - 
 -     @OnTextMessage
@@ -42,14 +42,14 @@ index f5a64bf..e69de29 100644
 -         try {
 -             return FactService.chat(message, context);
 -         } catch (GuardrailException e) {
--Index: src/main/java/dev/langchain4j/quarkus/workshop/FactService.java
+-Index: src/main/java/org/acme/knowsitall/FactService.java
 -IDEA additional info:
 -Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 -<+>UTF-8
 -===================================================================
--diff --git a/src/main/java/dev/langchain4j/quarkus/workshop/FactService.java b/src/main/java/dev/langchain4j/quarkus/workshop/FactService.java
----- a/src/main/java/dev/langchain4j/quarkus/workshop/FactService.java	(revision 82a9ece2c74b42d29c1682809de7740a70c03694)
--+++ b/src/main/java/dev/langchain4j/quarkus/workshop/FactService.java	(date 1762167002390)
+-diff --git a/src/main/java/org/acme/knowsitall/FactService.java b/src/main/java/org/acme/knowsitall/FactService.java
+---- a/src/main/java/org/acme/knowsitall/FactService.java	(revision 82a9ece2c74b42d29c1682809de7740a70c03694)
+-+++ b/src/main/java/org/acme/knowsitall/FactService.java	(date 1762167002390)
 -@@ -3,7 +3,6 @@
 - import dev.langchain4j.service.SystemMessage;
 - import dev.langchain4j.service.UserMessage;
@@ -65,10 +65,10 @@ index f5a64bf..e69de29 100644
 --    @OutputGuardrails(HallucinationGuard.class)
 -     String chat(String question, String context);
 - }
-diff --git a/src/main/java/dev/langchain4j/quarkus/workshop/FactService.java b/src/main/java/dev/langchain4j/quarkus/workshop/FactService.java
+diff --git a/src/main/java/org/acme/knowsitall/FactService.java b/src/main/java/org/acme/knowsitall/FactService.java
 index 123e02f..db777a4 100644
---- a/src/main/java/dev/langchain4j/quarkus/workshop/FactService.java
-+++ b/src/main/java/dev/langchain4j/quarkus/workshop/FactService.java
+--- a/src/main/java/org/acme/knowsitall/FactService.java
++++ b/src/main/java/org/acme/knowsitall/FactService.java
 @@ -2,7 +2,6 @@ package dev.langchain4j.quarkus.workshop;
  
  import dev.langchain4j.service.SystemMessage;

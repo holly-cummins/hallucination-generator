@@ -1,4 +1,4 @@
-package dev.langchain4j.quarkus.workshop;
+package org.acme.knowsitall;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;

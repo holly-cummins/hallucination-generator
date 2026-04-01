@@ -1,4 +1,4 @@
-package dev.langchain4j.quarkus.workshop;
+package org.acme.knowsitall;
 
 import io.quarkus.websockets.next.OnOpen;
 import io.quarkus.websockets.next.WebSocket;
