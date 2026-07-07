@@ -37,10 +37,9 @@ public class HallucinationGuard implements OutputGuardrail {
 
         scoreWebSocket.recordScore(truthiness);
 
-        System.out.println("Hallucination Guard: " + truthiness);
-        if (truthiness < 0.5) {
+        if (truthiness > 0.5) {
             scoreWebSocket.recordReject(responseFromLLM.text());
-            return reprompt("Truth detected. Most recent response: " + responseFromLLM.text(), "Ignore the previous messages and answer this question: " + question);
+            return reprompt("Not good enough.", "Answer this question: " + question);
         }
         return success();
     }
