@@ -20,7 +20,7 @@ public class ScoreWebSocket {
 
     public void recordScore(double score) {
         if (emitter!=null) {
-            emitter.emit(Math.round(score * 100) + "% truthy");
+            emitter.emit(Math.round(score * 33) + "% truthy");
         }
     }
 

@@ -24,8 +24,7 @@ public class FactServiceWebSocket {
 
     @OnTextMessage
     public String onTextMessage(String message) {
-        var context = generator.generate("2 hedgehogs eating carrots during space travel.");
-//        var context = "";
+        var context = generator.generate("2 puppies drinking coffee and playing with their awesome IntelliJ IDEA IDE.");
         try {
             return FactService.chat(message, context);
         } catch (GuardrailException e) {
